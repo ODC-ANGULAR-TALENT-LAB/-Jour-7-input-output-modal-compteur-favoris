@@ -1,9 +1,23 @@
 <div class="brand">SHOP</div>
-<nav>
+
+<button
+  class="menu-toggle"
+  type="button"
+  aria-label="Ouvrir ou fermer le menu"
+  [attr.aria-expanded]="isMenuOpen()"
+  aria-controls="main-navigation"
+  (click)="toggleMenu()"
+>
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<nav id="main-navigation" [class.open]="isMenuOpen()">
   <ul>
-    <li><a routerLink="/home">Home</a></li>
-    <li><a routerLink="/products">Products</a></li>
-    <li><a routerLink="/blog">Blog</a></li>
-    <li><a routerLink="/contact">Contact</a></li>
+    <li><a routerLink="/home" (click)="closeMenu()">Home</a></li>
+    <li><a routerLink="/products" (click)="closeMenu()">Products</a></li>
+    <li><a routerLink="/blog" (click)="closeMenu()">Blog</a></li>
+    <li><a routerLink="/contact" (click)="closeMenu()">Contact</a></li>
   </ul>
 </nav>

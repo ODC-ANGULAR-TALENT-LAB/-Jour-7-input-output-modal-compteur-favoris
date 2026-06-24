@@ -2,13 +2,14 @@
   display: block;
   background-color: #2e7d32;
   color: #e8f5e9;
-  padding: 20px 30px;
+  padding: 22px clamp(16px, 4vw, 48px);
   text-align: center;
-  box-shadow: 0 -4px 8px rgba(46, 125, 50, 0.2);
-  font-size: 1.25rem;
+  box-shadow: 0 -6px 18px rgba(46, 125, 50, 0.2);
+  font-size: 1rem;
   font-weight: 500;
 }
 
 :host p {
   margin: 0;
+  line-height: 1.5;
 }
