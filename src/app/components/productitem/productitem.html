@@ -1,6 +1,19 @@
 <article class="product-card">
-  <img class="product-image" [src]="product().image" [alt]="product().name" />
-  <h3 class="product-name">{{ product().name }}</h3>
-  <p class="product-price">{{ product().price }}</p>
+  <img class="product-image" [src]="product().imageUrl" [alt]="product().name" />
+  <h3 class="product-name">{{ product().name | uppercase }}</h3>
+  <p class="product-description">{{ product().description }}</p>
+
+  <p class="product-categories">Catégories : {{ product().categories | json }}</p>
+
+  <p class="product-price">
+    <span class="sold-price">{{ product().soldPrice | currency:'XAF':'symbol' }}</span>
+    <span class="regular-price">{{ product().regularPrice | currency:'XAF':'symbol' }}</span>
+  </p>
+
+  <!-- Méthode formatPrice() testée dans le template -->
+  <p class="product-format">{{ formatPrice(product().soldPrice) }}</p>
+
+  <p class="product-date">Ajouté le {{ product().createdAt | date:'dd/MM/yyyy' }}</p>
+
   <button class="add-to-cart" type="button">Ajouter au panier</button>
 </article>
