@@ -137,6 +137,43 @@ nav a.active {
   border-left: 1px solid rgba(232, 245, 233, 0.18);
 }
 
+.favorites {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid rgba(240, 180, 41, 0.55);
+  border-radius: 10px;
+  background: rgba(240, 180, 41, 0.12);
+  color: #e8f5e9;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.favorites-heart {
+  color: #ff6b6b;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.favorites-count {
+  color: #f0b429;
+  min-width: 12px;
+  text-align: center;
+}
+
+.favorites-label {
+  color: rgba(232, 245, 233, 0.85);
+  font-weight: 500;
+}
+
+@media (max-width: 420px) {
+  .favorites-label {
+    display: none;
+  }
+}
+
 .icon-btn {
   position: relative;
   display: grid;

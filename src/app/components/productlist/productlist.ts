@@ -1,11 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { Productitem } from '../productitem/productitem';
+import { Modalproductview } from '../modalproductview/modalproductview';
 import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-productlist',
   standalone: true,
-  imports: [Productitem],
+  imports: [Productitem, Modalproductview],
   templateUrl: './productlist.html',
   styleUrls: ['./productlist.css'],
 })
@@ -92,4 +93,28 @@ export class Productlist {
       categories: ['accessoire', 'coiffe', 'perles'],
     },
   ]);
+
+  // État du modal : afficher ou non + quel produit afficher
+  protected readonly isDisplayModal = signal(false);
+  protected readonly modalProduct = signal<Product | undefined>(undefined);
+
+  // Output : retransmet l'ajout aux favoris vers le parent (Container)
+  readonly favoriteAdded = output<Product>();
+
+  // Un produit a été cliqué -> on ouvre le modal avec ses données
+  onDisplayProductViewModal(product: Product): void {
+    this.modalProduct.set(product);
+    this.isDisplayModal.set(true);
+  }
+
+  // Le modal demande à être fermé -> on réinitialise l'état
+  onCloseModal(): void {
+    this.isDisplayModal.set(false);
+    this.modalProduct.set(undefined);
+  }
+
+  // Le modal signale un ajout aux favoris -> on le propage vers le haut
+  onFavoriteAdded(product: Product): void {
+    this.favoriteAdded.emit(product);
+  }
 }

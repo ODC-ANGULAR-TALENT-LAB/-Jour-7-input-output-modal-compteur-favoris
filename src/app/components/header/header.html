@@ -34,6 +34,12 @@
 </nav>
 
 <div class="header-actions">
+  <div class="favorites" aria-label="Nombre de favoris" title="Favoris">
+    <span class="favorites-heart" aria-hidden="true">❤</span>
+    <span class="favorites-count">{{ favoritesCount() }}</span>
+    <span class="favorites-label">favoris</span>
+  </div>
+
   <button class="icon-btn" type="button" aria-label="Rechercher un produit">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8" />

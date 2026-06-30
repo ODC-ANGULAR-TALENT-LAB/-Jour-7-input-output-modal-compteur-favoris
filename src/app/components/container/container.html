@@ -1,5 +1,5 @@
 <h2 class="container-title">Bonjour Mr/Mme, nous sommes ravis de vous accueillir dans notre boutique en ligne !!!! Vous trouverez votre bonheur parmi notre large selection de produits de grande qualité.</h2>
 
 
-<div><app-productlist></app-productlist></div>
+<div><app-productlist (favoriteAdded)="onFavoriteAdded($event)"></app-productlist></div>
 <router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -10,6 +10,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Header {
   protected readonly isMenuOpen = signal(false);
   protected readonly cartCount = signal(0);
+
+  // Input : compteur de favoris reçu depuis App (par défaut 0)
+  readonly favoritesCount = input(0);
 
   protected toggleMenu(): void {
     this.isMenuOpen.update((isOpen) => !isOpen);

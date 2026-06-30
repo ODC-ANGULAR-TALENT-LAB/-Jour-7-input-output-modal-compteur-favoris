@@ -1,5 +1,16 @@
 <div class="products-grid">
   @for (product of products(); track product.id) {
-    <app-productitem [product]="product" />
+    <app-productitem
+      [product]="product"
+      (displayProductViewModal)="onDisplayProductViewModal($event)"
+    />
   }
 </div>
+
+@if (isDisplayModal() && modalProduct(); as selectedProduct) {
+  <app-modalproductview
+    [product]="selectedProduct"
+    (close)="onCloseModal()"
+    (favoriteAdded)="onFavoriteAdded($event)"
+  />
+}

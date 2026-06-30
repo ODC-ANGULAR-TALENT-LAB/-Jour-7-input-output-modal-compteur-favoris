@@ -1,29 +1,48 @@
 # Shop App
 
-Application de boutique en ligne développée avec **Angular 22** dans le cadre du TP du Jour 5 (ODC Angular Talent Lab).
+Application de boutique en ligne développée avec **Angular 22** dans le cadre des TP de l'ODC Angular Talent Lab (Jours 5 à 7).
 
 ## Aperçu
 
 L'application présente une vitrine de produits avec :
 
-- un **header** vert collant (sticky) restant visible au défilement, avec la marque et la navigation (Home, Products, Blog, Contact) ;
+- un **header** vert collant (sticky) restant visible au défilement, avec la marque, la navigation (Home, Products, Blog, Contact) et un **compteur de favoris** ;
 - un **container** central blanc affichant un message d'accueil et la liste des produits ;
 - un **footer** vert.
 
 Les produits s'affichent sous forme de cartes disposées horizontalement et passant automatiquement à la ligne suivante lorsque la rangée est pleine. L'interface est **responsive** (ordinateur, tablette, mobile).
+
+Au clic sur un produit, un **modal** s'ouvre avec son détail. Un bouton « Ajouter aux favoris » incrémente le compteur affiché dans le header.
+
+## Communication entre composants (Jour 7)
+
+L'application illustre la communication `input()` / `output()` de l'API Signals d'Angular 22, propagée sur plusieurs niveaux :
+
+```
+Productitem  --(output: displayProductViewModal)-->  Productlist
+Productlist  --(input: product)-->                   Modalproductview
+Modalproductview --(output: favoriteAdded)-->  Productlist --> Container --> App
+App  --(input: favoritesCount)-->                    Header
+```
+
+- `input()` : transmet une donnée du parent vers l'enfant (`[...]`).
+- `output()` : remonte un événement de l'enfant vers le parent (`(...)`).
+- `Productlist` orchestre l'ouverture/fermeture du modal via deux signals (`isDisplayModal`, `modalProduct`).
+- `App` maintient le signal partagé `favoritesCount`.
 
 ## Architecture des composants
 
 ```
 src/app/
 ├── components/
-│   ├── header/         # En-tête (marque + navigation)
-│   ├── container/      # Zone centrale (titre + liste des produits)
-│   ├── productlist/    # Liste des produits (boucle @for)
-│   ├── productitem/    # Carte d'un produit (image, nom, prix)
-│   └── footer/         # Pied de page
+│   ├── header/             # En-tête (marque + navigation + compteur de favoris)
+│   ├── container/          # Zone centrale (titre + liste des produits)
+│   ├── productlist/        # Liste des produits + orchestration du modal
+│   ├── productitem/        # Carte d'un produit (clic = ouverture du modal)
+│   ├── modalproductview/   # Modal de détail + bouton « Ajouter aux favoris »
+│   └── footer/             # Pied de page
 └── models/
-    └── product.ts      # Interface Product
+    └── product.ts          # Interface Product
 ```
 
 L'interface `Product` est définie dans `models/product.ts` et réutilisée par les composants.
@@ -61,7 +80,16 @@ Les fichiers générés se trouvent dans le dossier `dist/`.
 2. Ajouter une entrée dans le tableau `products` de `src/app/components/productlist/productlist.ts` :
 
 ```ts
-{ name: 'Produit X', image: 'assets/images/Products/mon-image.jpg', price: '12000 Fcfa' }
+{
+  id: 9,
+  name: 'Produit X',
+  description: 'Description du produit',
+  soldPrice: 12000,
+  regularPrice: 16000,
+  imageUrl: 'assets/images/Products/mon-image.jpg',
+  createdAt: new Date('2026-06-30'),
+  categories: ['accessoire'],
+}
 ```
 
 Le produit apparaîtra automatiquement dans la grille.

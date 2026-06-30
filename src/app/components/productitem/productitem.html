@@ -1,4 +1,4 @@
-<article class="product-card">
+<article class="product-card" (click)="onProductClick()">
   <img class="product-image" [src]="product().imageUrl" [alt]="product().name" />
   <span class="product-tag">{{ product().categories[0] | lowercase }}</span>
   <h3 class="product-name">{{ product().name | uppercase }}</h3>
@@ -16,5 +16,7 @@
 
   <p class="product-date">Ajouté le {{ product().createdAt | date:'dd/MM/yyyy' }}</p>
 
-  <button class="add-to-cart" type="button">Ajouter au panier</button>
+  <button class="add-to-cart" type="button" (click)="$event.stopPropagation()">
+    Ajouter au panier
+  </button>
 </article>

@@ -1,0 +1,29 @@
+<!-- Overlay sombre : clic = fermeture (bonus) -->
+<div class="modal-overlay" (click)="onOverlayClick()"></div>
+
+<!-- Boîte du modal centrée, au-dessus de l'overlay -->
+<div class="modal-container" role="dialog" aria-modal="true" [attr.aria-label]="product().name">
+  <div class="modal-image">
+    <img [src]="product().imageUrl" [alt]="product().name" />
+  </div>
+
+  <div class="modal-details">
+    <span class="modal-tag">{{ product().categories[0] }}</span>
+    <h2 class="modal-name">{{ product().name }}</h2>
+    <p class="modal-description">{{ product().description }}</p>
+
+    <p class="modal-price">
+      <span class="sold-price">{{ product().soldPrice | currency: 'XAF' : 'symbol' }}</span>
+      <span class="regular-price">{{ product().regularPrice | currency: 'XAF' : 'symbol' }}</span>
+    </p>
+
+    <p class="modal-date">Ajouté le {{ product().createdAt | date: 'dd/MM/yyyy' }}</p>
+
+    <div class="modal-actions">
+      <button class="btn btn-favorite" type="button" (click)="onAddToFavorites()">
+        ❤ Ajouter aux favoris
+      </button>
+      <button class="btn btn-close" type="button" (click)="onCloseClick()">Fermer</button>
+    </div>
+  </div>
+</div>

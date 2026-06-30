@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CurrencyPipe, DatePipe, JsonPipe, LowerCasePipe, UpperCasePipe } from '@angular/common';
 import { Product } from '../../models/product';
 
@@ -11,6 +11,13 @@ import { Product } from '../../models/product';
 })
 export class Productitem {
   readonly product = input.required<Product>();
+
+  // Output : signale au parent qu'on a cliqué pour ouvrir le modal
+  readonly displayProductViewModal = output<Product>();
+
+  onProductClick(): void {
+    this.displayProductViewModal.emit(this.product());
+  }
 
   formatPrice(price: number): string {
     return price + ' FCFA';
