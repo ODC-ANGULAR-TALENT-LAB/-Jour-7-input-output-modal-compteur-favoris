@@ -34,10 +34,16 @@
 </nav>
 
 <div class="header-actions">
-  <div class="favorites" aria-label="Nombre de favoris" title="Favoris">
-    <span class="favorites-heart" aria-hidden="true">❤</span>
-    <span class="favorites-count">{{ favoritesCount() }}</span>
-    <span class="favorites-label">favoris</span>
+  <div class="favorites-block">
+    <div class="favorites" aria-label="Nombre de favoris" title="Favoris">
+      <span class="favorites-heart" aria-hidden="true">❤</span>
+      <span class="favorites-count">{{ favoritesCount() }}</span>
+      <span class="favorites-label">favoris</span>
+    </div>
+    <div class="rating-average" aria-label="Moyenne des notes" title="Moyenne des notes">
+      <span class="rating-star" aria-hidden="true">★</span>
+      <span class="rating-average-value">{{ averageRating() | number: '1.1-1' }}/5</span>
+    </div>
   </div>
 
   <button class="icon-btn" type="button" aria-label="Rechercher un produit">

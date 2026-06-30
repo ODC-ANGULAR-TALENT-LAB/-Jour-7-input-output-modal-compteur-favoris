@@ -98,6 +98,41 @@
   color: #999;
 }
 
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0 16px 12px;
+}
+
+.star {
+  padding: 0 2px;
+  border: none;
+  background: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #f0b429;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.star:hover,
+.star:focus-visible {
+  transform: scale(1.2);
+  outline: none;
+}
+
+.star.filled {
+  color: #f0b429;
+}
+
+.rating-value {
+  margin-left: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #777;
+}
+
 .add-to-cart {
   min-height: 44px;
   margin: 0 16px 18px;

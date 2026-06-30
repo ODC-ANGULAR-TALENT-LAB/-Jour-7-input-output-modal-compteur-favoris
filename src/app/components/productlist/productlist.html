@@ -3,6 +3,7 @@
     <app-productitem
       [product]="product"
       (displayProductViewModal)="onDisplayProductViewModal($event)"
+      (rate)="onRate(product, $event)"
     />
   }
 </div>
@@ -10,7 +11,10 @@
 @if (isDisplayModal() && modalProduct(); as selectedProduct) {
   <app-modalproductview
     [product]="selectedProduct"
+    [isFavorite]="isModalProductFavorite()"
     (close)="onCloseModal()"
     (favoriteAdded)="onFavoriteAdded($event)"
+    (favoriteRemoved)="onFavoriteRemoved($event)"
+    (rate)="onRate(selectedProduct, $event)"
   />
 }

@@ -1,4 +1,4 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, computed, output, signal } from '@angular/core';
 import { Productitem } from '../productitem/productitem';
 import { Modalproductview } from '../modalproductview/modalproductview';
 import { Product } from '../../models/product';
@@ -98,8 +98,33 @@ export class Productlist {
   protected readonly isDisplayModal = signal(false);
   protected readonly modalProduct = signal<Product | undefined>(undefined);
 
+  // Identifiants des produits déjà mis en favoris (pour éviter les doublons)
+  protected readonly favoriteIds = signal<number[]>([]);
+
+  // Moyenne (sur 5) des notes de TOUS les produits (un produit non noté compte 0)
+  protected readonly averageRating = computed(() => {
+    const list = this.products();
+    if (list.length === 0) {
+      return 0;
+    }
+    const total = list.reduce((sum, p) => sum + (p.rating ?? 0), 0);
+    return total / list.length;
+  });
+
   // Output : retransmet l'ajout aux favoris vers le parent (Container)
   readonly favoriteAdded = output<Product>();
+
+  // Output : retransmet le retrait des favoris vers le parent (Container)
+  readonly favoriteRemoved = output<Product>();
+
+  // Output : retransmet la nouvelle moyenne des notes vers le parent (Container)
+  readonly averageRatingChanged = output<number>();
+
+  // Le produit affiché dans le modal est-il déjà en favori ?
+  protected isModalProductFavorite(): boolean {
+    const current = this.modalProduct();
+    return current ? this.favoriteIds().includes(current.id) : false;
+  }
 
   // Un produit a été cliqué -> on ouvre le modal avec ses données
   onDisplayProductViewModal(product: Product): void {
@@ -113,8 +138,36 @@ export class Productlist {
     this.modalProduct.set(undefined);
   }
 
-  // Le modal signale un ajout aux favoris -> on le propage vers le haut
+  // Le modal signale un ajout aux favoris
+  // -> on n'ajoute (et on ne propage) qu'une seule fois par produit
   onFavoriteAdded(product: Product): void {
+    if (this.favoriteIds().includes(product.id)) {
+      return; // déjà en favori : on ignore
+    }
+    this.favoriteIds.update((ids) => [...ids, product.id]);
     this.favoriteAdded.emit(product);
+  }
+
+  // Le modal signale un retrait des favoris
+  // -> on retire l'id et on propage uniquement si le produit y était
+  onFavoriteRemoved(product: Product): void {
+    if (!this.favoriteIds().includes(product.id)) {
+      return; // pas en favori : rien à faire
+    }
+    this.favoriteIds.update((ids) => ids.filter((id) => id !== product.id));
+    this.favoriteRemoved.emit(product);
+  }
+
+  // Un produit a été noté -> on met à jour sa note et on remonte la moyenne
+  onRate(product: Product, rating: number): void {
+    this.products.update((list) =>
+      list.map((p) => (p.id === product.id ? { ...p, rating } : p)),
+    );
+    // Si le produit noté est celui ouvert dans le modal, on le rafraîchit aussi
+    const current = this.modalProduct();
+    if (current && current.id === product.id) {
+      this.modalProduct.set({ ...current, rating });
+    }
+    this.averageRatingChanged.emit(this.averageRating());
   }
 }

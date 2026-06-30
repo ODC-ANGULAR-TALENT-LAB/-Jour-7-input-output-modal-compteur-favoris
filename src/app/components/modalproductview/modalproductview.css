@@ -102,6 +102,37 @@
   color: #999;
 }
 
+.modal-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 4px 0;
+}
+
+.modal-rating .star {
+  padding: 0 2px;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #f0b429;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.modal-rating .star:hover,
+.modal-rating .star:focus-visible {
+  transform: scale(1.2);
+  outline: none;
+}
+
+.modal-rating .rating-value {
+  margin-left: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #777;
+}
+
 .modal-actions {
   display: flex;
   flex-wrap: wrap;
@@ -131,6 +162,21 @@
   background-color: #ffffff;
   color: #c62828;
   box-shadow: 0 6px 14px rgba(198, 40, 40, 0.25);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.btn-favorited {
+  border: 1px solid #2e7d32;
+  background-color: #e8f5e9;
+  color: #1b5e20;
+}
+
+.btn-favorited:hover,
+.btn-favorited:focus-visible {
+  background-color: #c62828;
+  border-color: #c62828;
+  color: #ffffff;
   outline: none;
   transform: translateY(-1px);
 }

@@ -1,3 +1,7 @@
-<app-header [favoritesCount]="favoritesCount()"></app-header>
-<app-container (favoriteAdded)="onFavoriteAdded($event)"></app-container>
+<app-header [favoritesCount]="favoritesCount()" [averageRating]="averageRating()"></app-header>
+<app-container
+  (favoriteAdded)="onFavoriteAdded($event)"
+  (favoriteRemoved)="onFavoriteRemoved($event)"
+  (averageRatingChanged)="onAverageRatingChanged($event)"
+></app-container>
 <app-footer></app-footer>

@@ -137,6 +137,12 @@ nav a.active {
   border-left: 1px solid rgba(232, 245, 233, 0.18);
 }
 
+.favorites-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .favorites {
   display: inline-flex;
   align-items: center;
@@ -166,6 +172,26 @@ nav a.active {
 .favorites-label {
   color: rgba(232, 245, 233, 0.85);
   font-weight: 500;
+}
+
+.rating-average {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(232, 245, 233, 0.85);
+}
+
+.rating-star {
+  color: #f0b429;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.rating-average-value {
+  color: #f0b429;
 }
 
 @media (max-width: 420px) {

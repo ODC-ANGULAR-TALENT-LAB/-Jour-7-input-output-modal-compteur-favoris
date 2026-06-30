@@ -19,10 +19,34 @@
 
     <p class="modal-date">Ajouté le {{ product().createdAt | date: 'dd/MM/yyyy' }}</p>
 
+    <!-- Notation par étoiles -->
+    <div class="modal-rating" role="group" aria-label="Noter ce produit">
+      @for (star of stars; track star) {
+        <button
+          type="button"
+          class="star"
+          [class.filled]="star <= (product().rating ?? 0)"
+          [attr.aria-label]="star + ' étoile(s)'"
+          (click)="onRate(star)"
+        >
+          {{ star <= (product().rating ?? 0) ? '★' : '☆' }}
+        </button>
+      }
+      @if ((product().rating ?? 0) > 0) {
+        <span class="rating-value">{{ product().rating }}/5</span>
+      }
+    </div>
+
     <div class="modal-actions">
-      <button class="btn btn-favorite" type="button" (click)="onAddToFavorites()">
-        ❤ Ajouter aux favoris
-      </button>
+      @if (isFavorite()) {
+        <button class="btn btn-favorited" type="button" (click)="onRemoveFromFavorites()">
+          ✓ En favoris — Retirer
+        </button>
+      } @else {
+        <button class="btn btn-favorite" type="button" (click)="onAddToFavorites()">
+          ❤ Ajouter aux favoris
+        </button>
+      }
       <button class="btn btn-close" type="button" (click)="onCloseClick()">Fermer</button>
     </div>
   </div>
